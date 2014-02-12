@@ -1,0 +1,29 @@
+/*
+ * @file
+ * custom.css
+ *
+ *Drupal Commons Origins theme overrides
+ */
+
+.header-color-row-one {
+    background-color: #ec1c24;
+    padding-bottom: 1em;
+}
+
+.header-color-row-two {
+    background-color: #ec1c24;
+    min-height: 0em;
+    border-top: 0px;
+}
+
+.block-search {
+    background-color: #0c887d;
+}
+
+#menu-bar.nav ul.menu li a {
+    border-left: 1px solid #bf151c;
+}
+
+#menu-bar.nav {
+    border-right: 1px solid #bf151c;
+}
