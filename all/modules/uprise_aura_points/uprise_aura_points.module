@@ -1,0 +1,117 @@
+<?php
+
+/**
+* Calculate average high points of top users
+* when once every hour when cron runs --hook_cron()
+*/
+
+function uprise_aura_points_cron() {
+  // Default to an hourly interval. Of course, cron has to be running at least
+  // hourly for this to work.
+  $interval = variable_get('cron_example_interval', 60 * 60);
+  // We usually don't want to act every time cron runs (which could be every
+  // minute) so keep a time for the next run in a variable.
+  if (time() >= variable_get('cron_example_next_execution', 0)) {
+    
+    // DB query for average score of top 10% of users (top 1000 if user base gets to 10k)
+    // count records total (users with points)
+    $points_count = db_query('SELECT uid FROM userpoints_total');
+    // Count the number of rows, divide by 10 and round up to neareast full number
+    // Decrease percentage captured as membership number increases
+    $top_percent = ceil($points_count->rowCount() / 2);
+    // average score of top 10% (to decrease with time)
+    $top_points = db_query_range('SELECT u.points from {userpoints_total} u
+                            ORDER BY u.points DESC', 0, $top_percent);
+    
+    $points = 0;
+    foreach ($top_points as $record) {
+      // Perform operations on $record->title, etc. here.
+      $count = $record->points;
+      $points = ($points + $count);
+    }
+    //Average scores among top users
+    $top_average_score = ($points / $top_percent);
+    // Save top average score for today to use when
+    // calculating each user's ranking
+    variable_set('top_average_score', $top_average_score);
+    
+    // DEBUGGING
+    //dpm($points_count->rowCount(), 'rows count');
+    //dpm($top_percent, 'divide rows by half to nearest full #');
+    //dpm($top_average_score, 'average score');
+    
+    $query = db_insert('userpoints_uprise_top_average') // Table name no longer needs {}
+    ->fields(array(
+      'date' => time(),
+      'top_average_userpoints' => $top_average_score
+    ));
+    $query->execute();
+    
+    variable_set('cron_example_next_execution', time() + $interval);
+  }
+}
+
+/**
+* Add points to new members for certain user actions
+*/
+
+function uprise_aura_points_user_login(&$edit, $account) {
+  // Add 5 points when new account is crated
+  $params = array (
+      'uid' => $account->uid,
+      'points' => 5,
+    );
+    userpoints_userpointsapi($params);
+}
+
+/**
+* Calculate each user's aura rank whenever the user object is loaded
+*/
+
+function uprise_aura_points_user_view($account) {
+  if (true) {
+    $account->content['summary']['blog'] =  array(
+      '#type' => 'user_profile_item',
+      '#title' => t('Blog'),
+      '#markup' => l(t('View recent blog entries'), "blog/$account->uid", array('attributes'
+=> array('title' => t("Read !username's latest blog entries.", array('!username' =>
+format_username($account)))))),
+'#attributes' => array('class' => array('blog')),
+    );
+}
+dpm($account, 'stuff');
+}
+
+/**
+* Implements hook_block_info().
+*/
+function uprise_aura_points_block_info() {
+  $blocks = array();
+
+  $blocks['UPRISE_AURA_POINTS_ABC'] = array(
+    'info' => t('Uprise Aura Points'),
+  );
+
+  return $blocks;
+}
+
+/**
+* Implements hook_block_view().
+*/
+function uprise_aura_points_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'UPRISE_AURA_POINTS_ABC':
+      $block['subject'] = '';
+      $block['content'] = _UPRISE_AURA_POINTS_BLOCK_ABC_CONTENT();
+      break;
+  }
+
+  return $block;
+}
+
+function _UPRISE_AURA_POINTS_BLOCK_ABC_CONTENT() {
+  $output = '';
+  return $output;
+}

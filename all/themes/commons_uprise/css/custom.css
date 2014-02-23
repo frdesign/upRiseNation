@@ -5,19 +5,29 @@
  *Drupal Commons Origins theme overrides
  */
 
+html {
+    background-color: #F7F3E8;
+}
+
 .header-color-row-one {
     background-color: #ec1c24;
     padding-bottom: 1em;
 }
 
 .header-color-row-two {
-    background-color: #ec1c24;
-    min-height: 0em;
+    background-color: #9D2E2C;
+    min-height: 1em;
     border-top: 0px;
 }
 
+.main-menu-home a,
+.main-menu-groups a {
+    background-image: none;
+}
+
 .block-search {
-    background-color: #0c887d;
+    background-image: none;
+    background-color: #9D2E2C;
 }
 
 #menu-bar.nav ul.menu li a {
@@ -25,5 +35,179 @@
 }
 
 #menu-bar.nav {
-    border-right: 1px solid #bf151c;
+    border-right: 1px solid black;
+    -webkit-box-shadow: red 0px 0px 0px;
+    -moz-box-shadow: red 0px 0px 0px;
+    box-shadow: red 0px 0px 0px;
+}
+
+.block-content ul.commons-utility-links {
+    text-align: left;
+    padding: .3em 0 .4em 1em;
+}
+
+.block-content ul.commons-utility-links li {
+    padding: 0 .3em 0 .3em;
+}
+
+/*Hide user name from serch area links*/
+.block-content ul.commons-utility-links li:first-child {
+    display: none;
+}
+
+.block-search .form-item-search-block-form {
+    margin-left: -1.8em;
+    margin-right: 1em;
+}
+
+.block-search {
+    width: 16em;
+}
+
+
+/*_________User page customization*/
+.page-user .pane-user-picture {
+    margin-left: 0px;
+}
+
+
+/*Hide page title*/
+.page-user header h2 {
+    display: none;
+}
+
+/*Make name larger*/
+.page-user h3 {
+    font-size: 2.3em;
+    color: #ec1c24;
+    margin-bottom: 5px;
+}
+
+.page-user .pane-user-picture .user-picture, .page-user .pane-user-picture .user-picture img{
+    -webkit-border-radius: 60px;
+    -moz-border-radius: 60px;
+    -ms-border-radius: 60px;
+    -o-border-radius: 60px;
+    border-radius: 60px;
+}
+
+.page-user .pane-user-picture .user-picture {
+    position: absolute;
+    margin: 80px 0 0 80px;
+}
+
+canvas#aura {
+    z-index: -10;
+    margin: 0 40px 0 0;
+    -webkit-border-radius: 60px;
+    -moz-border-radius: 60px;
+    -ms-border-radius: 60px;
+    -o-border-radius: 60px;
+    border-radius: 140px;
+}
+
+#aura-level-value {
+    font-size: 2em;
+}
+
+.page-user .pane-2 {
+    margin-bottom: 0px;
+    height: 60px;
+}
+
+.page-user .pane-user-field-facebook-url,
+.page-user .pane-user-field-linkedin-url,
+.page-user .pane-user-field-twitter-url {
+display: block;
+clear: right;
+margin-bottom: 5px;
+}
+
+.page-user #panels-ipe-paneid-11,
+.page-user #panels-ipe-paneid-12,
+.page-user #panels-ipe-paneid-13 {
+display: block;
+clear: both;
+margin-bottom: 5px;
+}
+
+
+
+h2#page-title {
+    color: #ec1c24;
+}
+
+.block-title {
+    color: #ec1c24;
+}
+
+#page-title {
+    font-size: 3em;
+    font-weight: 400;
+}
+
+.views-row {
+    border-bottom: 1px solid #ec1c24;
+}
+
+
+/*-------------------Media queries*/
+
+
+
+@media (max-width: 768px) {
+    .header-color-row-one {
+        border-top: 2.5em solid #9D2E2C;
+    }
+    
+    #menu-bar.nav{
+        margin-left: -33px;
+    }
+    
+    .block-content ul.commons-utility-links {
+        margin-top: -9px;
+    }
+}
+
+@media (max-width: 650px) {
+    .page-user .pane-2 {
+        clear: both;
+        display: block;
+    }
+    
+
+    #menu-bar.nav {
+        border-right: 0px solid black;
+        -webkit-box-shadow: red 0px 0px 0px;
+        -moz-box-shadow: red 0px 0px 0px;
+        box-shadow: red 0px 0px 0px;
+    }
+}
+
+@media (max-width: 570px) {
+    .header-wrapper{
+        overflow: visible;
+    }
+    
+    #menu-bar {
+        float: right;
+        
+        
+    }
+    .responsive-menus.responsified {
+        width: 90px;
+        margin: 12px 17px 0 0;
+    }
+    
+    .responsive-menus.responsified span.toggler {
+        background-color: #9D2E2C;
+    }
+}
+
+@media (max-width: 480px) {
+  .page-user .pane-user-picture .user-picture {
+    margin-left: -79px;
+  }
+  
+  
 }
