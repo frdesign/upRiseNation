@@ -64,23 +64,6 @@ function uprise_aura_points_user_login(&$edit, $account) {
     userpoints_userpointsapi($params);
 }
 
-/**
-* Calculate each user's aura rank whenever the user object is loaded
-*/
-
-function uprise_aura_points_user_view($account) {
-  if (true) {
-    $account->content['summary']['blog'] =  array(
-      '#type' => 'user_profile_item',
-      '#title' => t('Blog'),
-      '#markup' => l(t('View recent blog entries'), "blog/$account->uid", array('attributes'
-=> array('title' => t("Read !username's latest blog entries.", array('!username' =>
-format_username($account)))))),
-'#attributes' => array('class' => array('blog')),
-    );
-}
-dpm($account, 'stuff');
-}
 
 /**
 * Implements hook_block_info().
@@ -90,6 +73,7 @@ function uprise_aura_points_block_info() {
 
   $blocks['UPRISE_AURA_POINTS_ABC'] = array(
     'info' => t('Uprise Aura Points'),
+    'cache' => DRUPAL_NO_CACHE,
   );
 
   return $blocks;
@@ -112,6 +96,12 @@ function uprise_aura_points_block_view($delta = '') {
 }
 
 function _UPRISE_AURA_POINTS_BLOCK_ABC_CONTENT() {
-  $output = '';
+    // Calculate user's aura level
+    $user_aura_level = 50;
+    
+  $output = '
+    <div id="aura-container"><canvas id="aura"><p class="noCanvas">You need a <a href="http://www.google.com/chrome">modern browser</a> to view this.</p></canvas></div>
+    <div id="aura-level">Level: <span id="aura-level-value">' . $user_aura_level . '</span></div>
+  ';
   return $output;
 }

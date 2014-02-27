@@ -19,4 +19,3 @@ regions[help] = Help
 regions[page_top] = Page top
 regions[page_bottom] = Page bottom
 
-scripts[] = js/custom.js
